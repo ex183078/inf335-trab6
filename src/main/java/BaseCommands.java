@@ -1,25 +1,38 @@
 import com.mongodb.client.*;
 import org.bson.Document;
 
+import java.sql.*;
+
 public class BaseCommands {
 
     public static void main(String[] args) {
 
+        System.out.println("\n");
 
         MongoDatabase db = conectar("mongodb://localhost:27017", "inf335");
-
         MongoCollection<Document> collection = db.getCollection("produtos");
 
         listaProdutos(collection);
         System.out.println("\n");
 
-        //insereProdutos(collection, "7", "blackberry", "preto", 122, "reliquia");
-        //alteraProduto(collection, "7", 1);
+        insereProdutos(collection, "7",
+                "blackberry",
+                "preto",
+                122,
+                "reliquia");
+
+        listaProdutos(collection);
+        System.out.println("\n");
+
+        alteraProduto(collection, "7", 1);
+        listaProdutos(collection);
+        System.out.println("\n");
+
         apagaProduto(collection, "7");
         listaProdutos(collection);
+        System.out.println("\n");
 
-
-        /*Connection connection = conectarSQL(
+        /*Connection connection = conectar(
               "username",
             "password",
         "jdbc:mysql://localhost:3306/db");
@@ -27,7 +40,11 @@ public class BaseCommands {
         listaProdutos(connection);
         System.out.println("\n");
 
-        insereProdutos(connection, "7", "pocopoco", "122220G", 1000, "importado");
+        insereProdutos(connection, "7",
+                "pocopoco",
+                "122220G",
+                1000,
+                "importado");
 
         listaProdutos(connection);
         System.out.println("\n");
@@ -41,10 +58,9 @@ public class BaseCommands {
         System.out.println("\n");
 
         listaProdutos(connection);*/
-
     }
 
-    /*public static void listaProdutos(Connection conn) {
+/*    public static void listaProdutos(Connection conn) {
         PreparedStatement stmt;
 
         try {
@@ -73,7 +89,12 @@ public class BaseCommands {
         }
     }
 
-    public static void insereProdutos(Connection conn, String idProduto, String nome, String caracteristicas, Integer preco, String infoAdicional) {
+    public static void insereProdutos(Connection conn,
+                                      String idProduto,
+                                      String nome,
+                                      String caracteristicas,
+                                      Integer preco,
+                                      String infoAdicional) {
 
         Statement stmt;
 
@@ -165,7 +186,12 @@ public class BaseCommands {
             System.out.println(mongoPrint(produto));
         }
     }
-    private static void insereProdutos(MongoCollection<Document> collection, String idProduto, String nome, String caracteristicas, Integer preco, String infoAdicional){
+    private static void insereProdutos(MongoCollection<Document> collection,
+                                       String idProduto,
+                                       String nome,
+                                       String caracteristicas,
+                                       Integer preco,
+                                       String infoAdicional){
         Document document = new Document("idProduto", idProduto)
                                 .append("nome", nome)
                                 .append("caracteristicas", caracteristicas)
